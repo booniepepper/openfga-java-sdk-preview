@@ -11,18 +11,20 @@ import dev.openfga.api.model.CreateStoreRequest;
 
 import java.net.http.HttpClient;
 
-public class JavaMain {
+public class CreateStore {
     public static void main(String[] args) throws ApiException {
         // Setup
         var config = ApiClient.Configuration.of("http://localhost:8080");
         var apiClient = new ApiClient(HttpClient.newBuilder(), new JsonMapper().findAndRegisterModules(), config);
         var fga = new OpenFgaApi(apiClient);
 
-        // Call
-        var request = new CreateStoreRequest().name("demo-store");
+        // Create a Store
+        String storeName = "demo-store";
+        var request = new CreateStoreRequest().name(storeName);
+
         var response = fga.createStore(request);
 
         // Show
-        System.out.printf("The ID is: %s\n", response.getId());
+        System.out.printf("The Store ID is: %s\n", response.getId());
     }
 }
