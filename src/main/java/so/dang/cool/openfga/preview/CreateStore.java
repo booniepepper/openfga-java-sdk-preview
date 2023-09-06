@@ -4,25 +4,25 @@
 package so.dang.cool.openfga.preview;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import dev.openfga.api.OpenFgaApi;
-import dev.openfga.api.invoker.ApiClient;
-import dev.openfga.api.invoker.ApiException;
-import dev.openfga.api.model.CreateStoreRequest;
+import dev.openfga.sdk.api.OpenFgaApi;
+import dev.openfga.sdk.api.client.ApiClient;
+import dev.openfga.sdk.api.configuration.Configuration;
+import dev.openfga.sdk.api.model.CreateStoreRequest;
 
 import java.net.http.HttpClient;
 
 public class CreateStore {
-    public static void main(String[] args) throws ApiException {
+    public static void main(String[] args) throws Exception {
         // Setup
-        var config = ApiClient.Configuration.of("http://localhost:8080");
-        var apiClient = new ApiClient(HttpClient.newBuilder(), new JsonMapper().findAndRegisterModules(), config);
-        var fga = new OpenFgaApi(apiClient);
+        var config = new Configuration("http://localhost:8080");
+        var apiClient = new ApiClient(HttpClient.newBuilder(), new JsonMapper().findAndRegisterModules());
+        var fga = new OpenFgaApi(apiClient, config);
 
         // Create a Store
         String storeName = "demo-store";
         var request = new CreateStoreRequest().name(storeName);
 
-        var response = fga.createStore(request);
+        var response = fga.createStore(request).get();
 
         // Show
         System.out.printf("The Store ID is: %s\n", response.getId());

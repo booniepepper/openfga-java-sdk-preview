@@ -1,19 +1,20 @@
 package so.dang.cool.openfga.preview
 
 import com.fasterxml.jackson.databind.json.JsonMapper
-import dev.openfga.api.OpenFgaApi
-import dev.openfga.api.invoker.ApiClient
-import dev.openfga.api.model.TupleKey
-import dev.openfga.api.model.TupleKeys
-import dev.openfga.api.model.WriteRequest
+import dev.openfga.sdk.api.OpenFgaApi
+import dev.openfga.sdk.api.client.ApiClient
+import dev.openfga.sdk.api.configuration.Configuration
+import dev.openfga.sdk.api.model.TupleKey
+import dev.openfga.sdk.api.model.TupleKeys
+import dev.openfga.sdk.api.model.WriteRequest
 
 import java.net.http.HttpClient
 
 static void main(String[] args) {
   // Setup
-  def config = ApiClient.Configuration.of 'http://localhost:8080'
-  def apiClient = new ApiClient(HttpClient.newBuilder(), new JsonMapper(), config)
-  def fga = new OpenFgaApi(apiClient)
+  def config = new Configuration('http://localhost:8080')
+  def apiClient = new ApiClient(HttpClient.newBuilder(), new JsonMapper())
+  def fga = new OpenFgaApi(apiClient, config)
 
   // Write a relationship
   def storeId = ''
