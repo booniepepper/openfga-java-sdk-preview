@@ -6,6 +6,7 @@ package so.dang.cool.openfga.preview;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import dev.openfga.sdk.api.OpenFgaApi;
 import dev.openfga.sdk.api.client.ApiClient;
+import dev.openfga.sdk.api.configuration.ApiToken;
 import dev.openfga.sdk.api.configuration.ClientCredentials;
 import dev.openfga.sdk.api.configuration.Configuration;
 import dev.openfga.sdk.api.configuration.Credentials;
@@ -13,30 +14,6 @@ import dev.openfga.sdk.api.configuration.Credentials;
 import java.net.http.HttpClient;
 
 import static so.dang.cool.openfga.preview.GlobalConstants.*;
-
-// TODO: None of the "store" are allowed on the Auth0 FGA
-// Playground allows createStore and getStore
-
-// TODO: "useSingleRequestParameter" issue: Move the pageSize/continuationToken into some kinda RequestParameters class
-
-// TODO: Test the (static) API Token
-
-// TODO: Clean up issues
-
-/*
- Notes on clients:
-
- - Manually written classes/interfaces
- - Simpler API than the model types
- - Configuration will allow Auth Model ID
- - "Batch" check (check in parallel, limited thread pool, the batch is the number in flight)
- - List relations (wraps batch check)
- - Write will be non-transactional. Instead of a single write to DB, parallel writes
- - Tests for all the things
-
-Conference is coming up, Andres will be talking about Java SDK. (Oct 3rd)
-
- */
 
 public class ReadAuthorizationModels {
     public static void main(String[] args) throws Exception {
