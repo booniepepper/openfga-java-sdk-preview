@@ -11,7 +11,7 @@ repositories {
 val jacksonVersion = "2.14.1"
 
 dependencies {
-    implementation(files("../java-sdk/build/libs/openfga-sdk-0.0.1.jar"))
+    implementation("dev.openfga:openfga-sdk:0.0.+")
 
     // General
     implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
