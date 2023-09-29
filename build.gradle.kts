@@ -1,17 +1,18 @@
 plugins {
     `java-library`
     groovy
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.+"
+    id("com.diffplug.spotless") version "6.+"
 }
 
 repositories {
     mavenCentral()
 }
 
-val jacksonVersion = "2.14.1"
+val jacksonVersion = "2.14.+"
 
 dependencies {
-    implementation("dev.openfga:openfga-sdk:0.0.+")
+    implementation("dev.openfga:openfga-sdk:0.1.+")
 
     // General
     implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
@@ -36,4 +37,23 @@ java {
 
 kotlin {
     jvmToolchain(11)
+}
+
+spotless {
+    groovy {
+        greclipse()
+        importOrder()
+    }
+    java {
+        palantirJavaFormat()
+        removeUnusedImports()
+        importOrder()
+    }
+    kotlin {
+        ktlint()
+    }
+}
+
+tasks.register("fmt") {
+    dependsOn("spotlessApply")
 }
