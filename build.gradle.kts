@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     groovy
+    scala
     kotlin("jvm") version "1.9.+"
     id("com.diffplug.spotless") version "6.+"
 }
@@ -19,14 +20,17 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
-    implementation("org.openapitools:jackson-databind-nullable:0.2.1")
+    implementation("org.openapitools:jackson-databind-nullable:0.2.+")
 
     // Kotlin
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
 
     // Groovy
-    implementation("org.codehaus.groovy:groovy-all:3.0.15")
+    implementation("org.codehaus.groovy:groovy-all:3.0.+")
+
+    // Scala
+    implementation("org.scala-lang:scala3-library_3:3.0.+")
 }
 
 java {
@@ -37,6 +41,15 @@ java {
 
 kotlin {
     jvmToolchain(11)
+}
+
+sourceSets {
+    main {
+        scala.srcDirs(listOf("src/main/scala"))
+    }
+    test {
+        scala.srcDirs(listOf("test/main/scala"))
+    }
 }
 
 spotless {
@@ -51,6 +64,9 @@ spotless {
     }
     kotlin {
         ktlint()
+    }
+    scala {
+        scalafmt()
     }
 }
 
