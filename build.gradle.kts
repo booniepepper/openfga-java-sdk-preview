@@ -13,7 +13,7 @@ repositories {
 val jacksonVersion = "2.14.+"
 
 dependencies {
-    implementation("dev.openfga:openfga-sdk:0.1.+")
+    implementation("dev.openfga:openfga-sdk:0.2.+")
 
     // General
     implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
