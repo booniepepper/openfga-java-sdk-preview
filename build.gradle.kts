@@ -3,11 +3,15 @@ plugins {
     groovy
     scala
     kotlin("jvm") version "1.9.+"
+    id("dev.clojurephant.clojure") version "0.8.+"
     id("com.diffplug.spotless") version "6.+"
 }
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://repo.clojars.org/")
+    }
 }
 
 val jacksonVersion = "2.14.+"
@@ -31,6 +35,10 @@ dependencies {
 
     // Scala
     implementation("org.scala-lang:scala3-library_3:3.0.+")
+
+    // Clojure
+    implementation("org.clojure:clojure:1.11.+")
+    implementation("org.clojure:tools.namespace:1.3.+") // REPL support
 }
 
 java {
@@ -47,8 +55,13 @@ sourceSets {
     main {
         scala.srcDirs(listOf("src/main/scala"))
     }
-    test {
-        scala.srcDirs(listOf("test/main/scala"))
+}
+
+clojure {
+    builds {
+        val mybuild by creating {
+            sourceRoots.from("src/main/clojure")
+        }
     }
 }
 
