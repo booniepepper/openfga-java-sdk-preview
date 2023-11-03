@@ -32,3 +32,5 @@ build
 # Clojure tooling
 .clj-kondo
 .lsp
+.nrepl-port
+

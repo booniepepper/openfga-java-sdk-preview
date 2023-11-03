@@ -1,0 +1,8 @@
+#!/bin/sh
+
+clj -Sdeps '{:deps {nrepl/nrepl {:mvn/version "1.1.0"}}}' \
+  -M \
+  -m nrepl.cmdline \
+  --connect \
+  --host localhost \
+  --port "$(cat .nrepl-port)"

@@ -1,9 +1,13 @@
+import dev.clojurephant.plugin.clojure.tasks.ClojureNRepl
+
 plugins {
     `java-library`
     groovy
     scala
     kotlin("jvm") version "1.9.+"
     id("dev.clojurephant.clojure") version "0.8.+"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+
     id("com.diffplug.spotless") version "6.+"
 }
 
@@ -41,28 +45,18 @@ dependencies {
     implementation("org.clojure:tools.namespace:1.3.+") // REPL support
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
-}
-
-kotlin {
-    jvmToolchain(11)
-}
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(11))
+kotlin.jvmToolchain(11)
 
 sourceSets {
     main {
+        clojure.srcDirs(listOf("src/main/clojure"))
         scala.srcDirs(listOf("src/main/scala"))
     }
 }
 
-clojure {
-    builds {
-        val mybuild by creating {
-            sourceRoots.from("src/main/clojure")
-        }
-    }
+clojure.builds.named("main") {
+    aotAll()
 }
 
 spotless {
@@ -81,6 +75,10 @@ spotless {
     scala {
         scalafmt()
     }
+}
+
+tasks.withType<ClojureNRepl> {
+    classpath.from(/* TODO: add java outputs here */)
 }
 
 tasks.register("fmt") {
